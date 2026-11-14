@@ -1,0 +1,11 @@
+node_modules/
+dist/
+target/
+**/node_modules/
+**/dist/
+**/target/
+.snapshots/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo

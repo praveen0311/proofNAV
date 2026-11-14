@@ -1,0 +1,48 @@
+name: ProofNAV CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  contract:
+    name: NEAR contract tests and WASM build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: Run contract unit tests
+        working-directory: contracts/proofnav
+        run: cargo test
+      - name: Install cargo-near
+        run: cargo install cargo-near --locked
+      - name: Build NEAR contract
+        working-directory: contracts/proofnav
+        run: cargo near build non-reproducible-wasm --no-abi
+
+  backend:
+    name: Backend typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run typecheck
+
+  frontend:
+    name: Frontend production build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: frontend
+        run: npm install
+      - working-directory: frontend
+        run: npm run build
