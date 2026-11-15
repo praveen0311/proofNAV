@@ -29,4 +29,37 @@
 .loading-panel{display:flex;align-items:center;justify-content:center;gap:12px;min-height:180px;color:#aab7d0;font-size:12px}
 .explorer-link{display:inline-flex}
 .icon-button:disabled{opacity:.55;cursor:wait}
+.nav-input-section{margin-top:24px}
+.investor-panel{margin:14px 0}
+.investor-heading{align-items:flex-start}
+.investor-heading .wallet-button{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.investor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.investor-card{min-width:0;padding:17px;border:1px solid #293650;border-radius:10px;background:linear-gradient(145deg,#17243a,#131e30)}
+.investor-card h3{margin:0;font:650 14px Manrope;color:#e5ebfa}
+.investor-card p{margin:7px 0 15px;color:#8e9bb4;font-size:11px;line-height:1.55}
+.investor-field{display:grid;gap:6px;margin-bottom:12px;color:#8997b3;font-size:10px}
+.investor-field input{width:100%;min-width:0;border:1px solid #34415b;border-radius:7px;background:#0d1524;color:#edf1fa;padding:10px 11px;font:12px 'DM Sans',sans-serif;outline:none}
+.investor-field input:focus{border-color:#8798ee;box-shadow:0 0 0 2px #8798ee2b}
+.investor-card>.primary-button{width:100%;justify-content:center}
+.investor-actions{display:flex;gap:8px;flex-wrap:wrap}
+.investor-actions .primary-button,.investor-actions .secondary-button{justify-content:center;flex:1}
+.investor-card>small{display:block;margin-top:12px;color:#8290aa;font-size:10px;line-height:1.55}
+.investor-quote{display:grid;gap:8px;margin-top:14px;padding:12px;border:1px solid #293650;border-radius:8px;background:#0e1728}
+.investor-quote>div{display:flex;justify-content:space-between;gap:12px;color:#8290aa;font-size:10px}
+.investor-quote b{color:#d7deef;font-weight:600;text-align:right}
+.investor-quote .investor-liquidity-ok{color:#68d4ae}
+.investor-quote .investor-liquidity-low{color:#f0a36f}
+.investor-message{margin:14px 0 0;padding:11px 12px;border:1px solid #34415b;border-radius:8px;background:#0e1728;color:#aab8de;font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.nav-input-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.nav-input-grid label{display:grid;gap:6px;color:#99a7c0;font-size:10px}
+.nav-input-grid input{width:100%;min-width:0;border:1px solid #34415b;border-radius:7px;background:#0d1524;color:#edf1fa;padding:9px 10px;font:11px 'DM Sans',sans-serif}
+.nav-input-grid input:focus{outline:1px solid #93a2ff;border-color:#93a2ff}
+.nav-input-card{border:1px solid #293650;border-radius:9px;background:#0e1728;padding:12px 14px;margin:12px 0}
+.nav-input-card legend{padding:0 6px;color:#b8c5e1;font:500 10px 'DM Mono'}
+.nav-remove-button{margin-left:auto}
+.nav-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;margin-top:18px}
+.governance-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin:15px 0}
+.governance-panel small{display:block;color:#8997b3;font-size:10px;line-height:1.55;margin-top:8px}
+.tx-message{color:#c6d1eb;font-size:11px;overflow-wrap:anywhere}
 @media(max-width:760px){.contract-banner{align-items:flex-start;flex-direction:column;gap:8px}.proof-details{grid-template-columns:1fr}.detail-row{font-size:9px}.top-actions{flex-wrap:wrap}}
+@media(max-width:760px){.nav-input-grid,.nav-preview-grid,.investor-grid{grid-template-columns:1fr}.investor-heading{align-items:flex-start}.investor-heading .wallet-button{max-width:180px}.investor-actions{flex-direction:column}.investor-actions button{width:100%}}

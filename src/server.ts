@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import { lifecycleRouter } from './lifecycle-routes.js';
+import { navSnapshotRouter } from './nav-snapshot.js';
 import { db } from './db.js';
 const app = express();
 app.use(cors());
 app.use(express.json({limit:'1mb'}));
 app.get('/health', (_req,res)=>res.json({status:'ok',service:'proofnav-lifecycle-api'}));
 app.use('/api/v1/lifecycle', lifecycleRouter);
+app.use('/api/v1/nav-snapshots', navSnapshotRouter);
 app.get('/api/v1/lifecycle/ledger', (_req,res)=>res.json(db.prepare('SELECT * FROM lifecycle_transactions ORDER BY created_at DESC LIMIT 200').all()));
 const port = Number(process.env.PORT || 3001);
 app.listen(port,()=>console.log(`ProofNAV lifecycle API listening on ${port}`));

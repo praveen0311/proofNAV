@@ -76,12 +76,42 @@ export default function InvestorLifecycle() {
     } catch (e) { setMessage((e as Error).message); } finally { setBusy(false); }
   }
 
-  return <section style={{margin:'24px 0',padding:24,border:'1px solid #273449',borderRadius:16,background:'#101a29',color:'#edf3fb'}}>
-    <div style={{display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}><div><div style={{fontSize:11,letterSpacing:2,color:'#8ea7c4'}}>INVESTOR PORTAL</div><h2 style={{margin:'6px 0 16px'}}>Subscribe & redeem</h2></div><button onClick={async()=>{await connectWallet();setAccount(await getConnectedAccount());}}>{account || 'Connect wallet'}</button></div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:18}}>
-      <div style={{padding:16,background:'#17263a',borderRadius:12}}><h3>Subscribe with USDC</h3><p style={{color:'#9db0c7'}}>Transfer native Circle USDC to the fund treasury.</p><input value={usdc} onChange={e=>setUsdc(e.target.value)} aria-label="USDC amount" style={{width:'100%',padding:12,boxSizing:'border-box'}}/><button disabled={busy} onClick={subscribe} style={{marginTop:12}}>Transfer USDC</button><small style={{display:'block',marginTop:10,color:'#9db0c7'}}>Shares are minted only after payment verification and on-chain settlement.</small></div>
-      <div style={{padding:16,background:'#17263a',borderRadius:12}}><h3>Redeem PNAV</h3><p style={{color:'#9db0c7'}}>Uses the latest published NAV, with no redemption fee.</p><input value={shares} onChange={e=>setShares(e.target.value)} aria-label="PNAV shares" style={{width:'100%',padding:12,boxSizing:'border-box'}}/><button disabled={busy} onClick={loadQuote} style={{marginTop:12}}>Check quote & liquidity</button>{quote && <div style={{marginTop:12,fontSize:13}}>Est. payout: <b>{money(quote.usdcAmountAtomic)} USDC</b><br/>NAV sequence: {quote.navSequence}<br/>Treasury liquidity: {quote.liquiditySufficient ? 'Sufficient' : 'Insufficient'}</div>}<button disabled={busy || !quote?.liquiditySufficient} onClick={redeem} style={{marginTop:12,display:'block'}}>Request redemption</button></div>
+  return <section className="panel investor-panel">
+    <div className="panel-heading investor-heading">
+      <div><span className="eyebrow">INVESTOR PORTAL</span><h3>Subscribe & redeem</h3></div>
+      <button className="wallet-button" type="button" onClick={async () => { await connectWallet(); setAccount(await getConnectedAccount()); }}>
+        {account || 'Connect wallet'}
+      </button>
     </div>
-    {message && <p role="status" style={{marginTop:16,overflowWrap:'anywhere'}}>{message}</p>}
+    <div className="investor-grid">
+      <div className="investor-card">
+        <h3>Subscribe with USDC</h3>
+        <p>Transfer native Circle USDC to the fund treasury.</p>
+        <label className="investor-field">
+          USDC amount
+          <input type="text" inputMode="decimal" value={usdc} onChange={event => setUsdc(event.target.value)} aria-label="USDC amount" />
+        </label>
+        <button className="primary-button" type="button" disabled={busy} onClick={subscribe}>Transfer USDC</button>
+        <small>Shares are minted only after payment verification and on-chain settlement.</small>
+      </div>
+      <div className="investor-card">
+        <h3>Redeem PNAV</h3>
+        <p>Uses the latest published NAV, with no redemption fee.</p>
+        <label className="investor-field">
+          PNAV shares
+          <input type="text" inputMode="decimal" value={shares} onChange={event => setShares(event.target.value)} aria-label="PNAV shares" />
+        </label>
+        <div className="investor-actions">
+          <button className="secondary-button" type="button" disabled={busy} onClick={loadQuote}>Check quote & liquidity</button>
+          <button className="primary-button" type="button" disabled={busy || !quote?.liquiditySufficient} onClick={redeem}>Request redemption</button>
+        </div>
+        {quote && <div className="investor-quote">
+          <div><span>Estimated payout</span><b>{money(quote.usdcAmountAtomic)} USDC</b></div>
+          <div><span>NAV sequence</span><b>#{quote.navSequence}</b></div>
+          <div><span>Treasury liquidity</span><b className={quote.liquiditySufficient ? "investor-liquidity-ok" : "investor-liquidity-low"}>{quote.liquiditySufficient ? 'Sufficient' : 'Insufficient'}</b></div>
+        </div>}
+      </div>
+    </div>
+    {message && <p className="investor-message" role="status">{message}</p>}
   </section>;
 }
